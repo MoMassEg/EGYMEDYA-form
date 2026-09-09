@@ -4,7 +4,8 @@ create table if not exists public.submissions (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   phone text not null,
-  instagram text not null,
+  instagram text,
+  linkedin text,
   email text not null,
   created_at timestamptz not null default timezone('utc', now()),
   updated_at timestamptz not null default timezone('utc', now())
@@ -24,5 +25,4 @@ create policy "Public can submit a lead"
   to anon
   with check (char_length(name) between 2 and 100
     and char_length(phone) between 7 and 20
-    and char_length(instagram) between 2 and 30
     and char_length(email) between 5 and 160);

@@ -1,3 +1,4 @@
+ .optional { color:var(--muted); font-size:10px; font-weight:400; margin-left:5px; text-transform:uppercase; }
  .form-brand { border-bottom:1px solid var(--line); margin-bottom:25px; padding-bottom:20px; }
  .form-brand .brand img { height:46px; }
 .panel-actions { align-items:center; display:flex; flex-wrap:wrap; gap:9px; }
