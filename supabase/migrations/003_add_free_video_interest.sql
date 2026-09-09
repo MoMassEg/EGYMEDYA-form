@@ -1,0 +1,1 @@
+alter table public.submissions add column if not exists interested_in_free_video boolean not null default false;
