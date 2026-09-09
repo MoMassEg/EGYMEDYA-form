@@ -1,0 +1,3 @@
+import { Logo } from "@/components/Logo";
+import { LoginForm } from "@/components/LoginForm";
+export default function LoginPage() { return <main className="landing"><header className="site-header"><Logo /></header><section className="landing-main" style={{ display:"block", maxWidth:520 }}><div className="form-card"><div className="eyebrow">Private workspace</div><h2>Welcome back.</h2><p>Sign in to manage your incoming conversations.</p><LoginForm /></div></section></main>; }

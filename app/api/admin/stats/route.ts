@@ -1,0 +1,4 @@
+import { NextResponse } from "next/server";
+import { getSession } from "@/lib/auth";
+import { countSubmissions } from "@/lib/submissions";
+export async function GET(){try{if(!(await getSession()))return NextResponse.json({error:"Unauthorized"},{status:401});const now=new Date();const startOfDay=new Date(now.getFullYear(),now.getMonth(),now.getDate()).toISOString();const startOfWeek=new Date(now.getFullYear(),now.getMonth(),now.getDate()-6).toISOString();const startOfMonth=new Date(now.getFullYear(),now.getMonth(),1).toISOString();const [total,today,week,month]=await Promise.all([countSubmissions(),countSubmissions(startOfDay),countSubmissions(startOfWeek),countSubmissions(startOfMonth)]);return NextResponse.json({total,today,week,month});}catch{return NextResponse.json({error:"Admin database is not configured. Add SUPABASE_SERVICE_ROLE_KEY and run the Supabase migration."},{status:503});}}

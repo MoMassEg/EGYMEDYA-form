@@ -1,0 +1,2 @@
+import Image from "next/image";
+export function Logo() { return <span className="brand"><Image src="/logo/EgyMedia-Transparent.png" alt="EgyMedya" width={42} height={47} priority /><span>EGYMEDYA</span></span>; }
