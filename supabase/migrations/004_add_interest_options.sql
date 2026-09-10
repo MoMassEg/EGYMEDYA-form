@@ -1,0 +1,1 @@
+alter table public.submissions add column if not exists interests text[] not null default '{}';
