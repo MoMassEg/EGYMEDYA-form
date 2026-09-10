@@ -1,8 +1,8 @@
  .optional { color:var(--muted); font-size:10px; font-weight:400; margin-left:5px; text-transform:uppercase; }
 .interest-offer { background:rgba(232,185,87,.06); border:1px solid rgba(232,185,87,.24); border-radius:5px; margin:8px 0 18px; padding:15px; }
-.interest-offer p { color:#c9c3b7; font-size:18px; line-height:1.65; margin:0 0 13px; }
+.interest-offer p { color:#c9c3b7; font-size:13px; line-height:1.65; margin:0 0 13px; }
 .interest-question { color:var(--paper) !important; font-weight:800; margin-top:16px !important; }
-.interest-check { align-items:center; color:var(--gold-bright); cursor:pointer; display:flex; font-size:13px; font-weight:800; gap:10px; }
+.interest-check { align-items:center; color:var(--gold-bright); cursor:pointer; display:flex; font-size:13px; font-weight:800; gap:10px; margin:7px 0; }
 .interest-check input { accent-color:var(--gold); height:18px; width:18px; }
  .form-brand { border-bottom:1px solid var(--line); margin-bottom:25px; padding-bottom:20px; }
  .form-brand .brand img { height:46px; }
