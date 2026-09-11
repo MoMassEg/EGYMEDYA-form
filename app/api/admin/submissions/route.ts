@@ -1,7 +1,26 @@
 import { NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import { deleteAllSubmissions, deleteSubmission, listSubmissions, updateSubmission } from "@/lib/submissions";
-export async function GET(request:Request){try{if(!(await getSession()))return NextResponse.json({error:"Unauthorized"},{status:401});const url=new URL(request.url);const page=Math.max(1,Number(url.searchParams.get("page")||1));const limit=Math.min(50,Math.max(1,Number(url.searchParams.get("limit")||20)));const search=url.searchParams.get("search")||"";const result=await listSubmissions(search,page,limit);return NextResponse.json({...result,page,limit});}catch{return NextResponse.json({error:"Admin database is not configured. Add SUPABASE_SERVICE_ROLE_KEY and run the Supabase migration."},{status:503});}}
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export async function GET(request: Request) {
+  try {
+    if (!(await getSession())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const url = new URL(request.url);
+    const page = Math.max(1, Number(url.searchParams.get("page") || 1));
+    const limit = Math.min(500, Math.max(1, Number(url.searchParams.get("limit") || 20)));
+    const search = url.searchParams.get("search") || "";
+    const result = await listSubmissions(search, page, limit);
+    return NextResponse.json({ ...result, page, limit }, {
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+      }
+    });
+  } catch {
+    return NextResponse.json({ error: "Admin database is not configured. Add SUPABASE_SERVICE_ROLE_KEY and run the Supabase migration." }, { status: 503 });
+  }
+}
 export async function DELETE(request:Request){try{if(!(await getSession()))return NextResponse.json({error:"Unauthorized"},{status:401});const id=new URL(request.url).searchParams.get("id");if(!id)return NextResponse.json({error:"Missing submission id."},{status:400});await deleteSubmission(id);return NextResponse.json({ok:true});}catch{return NextResponse.json({error:"Could not delete this submission."},{status:500});}}
 export async function PUT(request:Request){try{if(!(await getSession()))return NextResponse.json({error:"Unauthorized"},{status:401});const body=await request.json();if(!body.id)return NextResponse.json({error:"Missing submission id."},{status:400});const result=await updateSubmission(body.id,{name:body.name,phone:body.phone,instagram:body.instagram||null,linkedin:body.linkedin||null,email:body.email,interests:Array.isArray(body.interests)?body.interests:[]});return NextResponse.json(result);}catch{return NextResponse.json({error:"Could not update this submission."},{status:500});}}
 export async function PATCH(request:Request){try{if(!(await getSession()))return NextResponse.json({error:"Unauthorized"},{status:401});await deleteAllSubmissions();return NextResponse.json({ok:true});}catch{return NextResponse.json({error:"Could not delete all submissions."},{status:500});}}
